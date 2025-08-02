@@ -2,18 +2,6 @@ CREATE EXTENSION IF NOT EXISTS plpython3u;
 
 CREATE INDEX IF NOT EXISTS id_idnex ON Comments (id ASC);
 
---SHOW timezonme;
-
---CREATE OR REPLACE TABLE burak(sayi int);
-
---SELECT pg_get_serial_sequence('Comments', 'id');
-
---SELECT setval('public.comments_id_seq', (SELECT MAX(id) FROM Comments));
-
---SELECT * FROM Comments;
-
---DROP INDEX IF EXISTS id_idnex
-
 DROP FUNCTION IF EXISTS DetectLanguages(table_name VARCHAR(255), comment_column VARCHAR(255), translate_language VARCHAR(255));
 --TABLE(comment TEXT, language VARCHAR(255))
 
@@ -186,4 +174,5 @@ SELECT * FROM analyzed_titles;
 SELECT * FROM translated_comments;
 SELECT * FROM translated_title;
 SELECT * FROM analyzed_comments;
+
 SELECT * FROM analyzed_title;
