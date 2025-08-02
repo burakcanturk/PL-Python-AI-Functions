@@ -152,12 +152,12 @@ $$ LANGUAGE plpython3u;
 DROP TABLE IF EXISTS translated_comments;
 
 CREATE TABLE IF NOT EXISTS translated_comments AS
-SELECT * FROM DetectLanguages("Comments", "comment", "en");
+SELECT * FROM DetectLanguages('Comments', 'comment', 'en');
 
 DROP TABLE IF EXISTS translated_titles;
 
 CREATE TABLE IF NOT EXISTS translated_titles AS
-SELECT * FROM DetectLanguages("Comments", "title", "en");
+SELECT * FROM DetectLanguages('Comments', 'title', 'en');
 
 DROP TABLE IF EXISTS analyzed_comments;
 
@@ -176,3 +176,4 @@ SELECT * FROM translated_title;
 SELECT * FROM analyzed_comments;
 
 SELECT * FROM analyzed_title;
+
