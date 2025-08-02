@@ -3,7 +3,6 @@ CREATE EXTENSION IF NOT EXISTS plpython3u;
 CREATE INDEX IF NOT EXISTS id_idnex ON Comments (id ASC);
 
 DROP FUNCTION IF EXISTS DetectLanguages(table_name VARCHAR(255), comment_column VARCHAR(255), translate_language VARCHAR(255));
---TABLE(comment TEXT, language VARCHAR(255))
 
 CREATE OR REPLACE FUNCTION DetectLanguages(table_name VARCHAR(255), comment_column VARCHAR(255), translate_language VARCHAR(255) DEFAULT 'tr')
 RETURNS TABLE(id INT, comment TEXT, language VARCHAR(255), translated TEXT) /*TEXT*/
@@ -42,7 +41,6 @@ AS $$
 
 	while i < len(comments):
 		try:
-			try_range = 10
 			if comments[i] != "":
 				lang, translated = asyncio.run(detect_language(comments[i]))
 				ret_val.append((ids[i], comments[i], lang, translated))
@@ -50,6 +48,7 @@ AS $$
 			else:
 				ret_val.append((ids[i], comments[i], "empty", ""))
 				plpy.notice(f"Empty {i}")
+			try_range = 10
 		except:
 			if try_range == 0:
 				ret_val.append((ids[i], comments[i], "error", ""))
@@ -149,6 +148,7 @@ AS $$
 
 $$ LANGUAGE plpython3u;
 
+
 DROP TABLE IF EXISTS translated_comments;
 
 CREATE TABLE IF NOT EXISTS translated_comments AS
@@ -169,11 +169,12 @@ DROP TABLE IF EXISTS analyzed_titles;
 CREATE TABLE IF NOT EXISTS analyzed_titles AS
 SELECT * FROM CommentAnalyze('translated_titles', 'translated', ARRAY['money', 'car', 'weather', 'other']);
 
-SELECT * FROM analyzed_titles;
+
 
 SELECT * FROM translated_comments;
-SELECT * FROM translated_title;
+SELECT * FROM translated_titles;
 SELECT * FROM analyzed_comments;
+SELECT * FROM analyzed_titles;
 
-SELECT * FROM analyzed_title;
 
+--SELECT * FROM Comments;
